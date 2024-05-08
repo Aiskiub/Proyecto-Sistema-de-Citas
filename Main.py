@@ -1,12 +1,8 @@
+import citas.cita as citas
 def main():
     print("Hola mi gente, aqui va ir el poderoso main <3")
+    print("Aqui va la cita de la semana:")
+    citas.cita()
 
 if __name__ == "__main__":
     main()
-    
-def prueba():
-    print("Esto es una prueba del dev01 pull request")
-    
-    
-    def prueba02():
-        print("Hola, soy una prueba del dev02 pull request")
