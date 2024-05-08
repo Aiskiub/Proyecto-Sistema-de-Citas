@@ -6,3 +6,7 @@ if __name__ == "__main__":
     
 def prueba():
     print("Esto es una prueba del dev01")
+    
+    
+    def prueba02():
+        print("Hola, soy una prueba del dev02")
