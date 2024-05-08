@@ -5,3 +5,7 @@ if __name__ == "__main__":
     main()
     
     mi cambio maluco
+    
+    
+    def prueba02():
+        print("Hola, soy una prueba del dev02")
