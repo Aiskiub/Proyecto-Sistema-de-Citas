@@ -1,5 +1,5 @@
 from pacientes.paciente import GestionDePacientes, Paciente
-from datetime import datetime
+from datetime import date
 
 def main():
     gestion_pacientes = GestionDePacientes()
@@ -26,7 +26,7 @@ def main():
             while True:
                 fecha_nacimiento_str = input("Ingrese la fecha de nacimiento del paciente (YYYY-MM-DD): ")
                 try:
-                    fecha_nacimiento = datetime.strptime(fecha_nacimiento_str, "%Y-%m-%d").date()
+                    fecha_nacimiento = date.fromisoformat(fecha_nacimiento_str)
                     break
                 except ValueError:
                     print("Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")

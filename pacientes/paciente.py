@@ -2,11 +2,10 @@ from datetime import date
 
 # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
 def calcular_edad(fecha_nacimiento):
-        hoy = date.today()
-        if fecha_nacimiento > hoy:
-            return hoy.year - fecha_nacimiento.year - 1
-        else:
-            return hoy.year - fecha_nacimiento.year
+    fecha_actual = date.today()
+    resultado = fecha_actual.year - fecha_nacimiento.year
+    resultado -= ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+    return resultado
 
 # Clasificamos la edad de un paciente en función de su edad
 def clasificar(edad):
@@ -29,14 +28,13 @@ def clasificar(edad):
         
 # Definimos la clase Paciente
 class Paciente:
-    def __init__(self, nombre, apellido, tipo_id, id, fecha_nacimiento, edad=None, historial=None, cita=None, clasificacion=None):
+    def __init__(self, nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento):
         self.nombre = nombre
         self.apellido = apellido
-        self.tipo_id = tipo_id
-        self.id = id
-        self.fecha_nacimiento = date.fromisoformat(fecha_nacimiento)
+        self.tipo_documento = tipo_documento
+        self.documento_identidad = documento_identidad
+        self.fecha_nacimiento = fecha_nacimiento
         self.edad = calcular_edad(self.fecha_nacimiento)
-        
         self.clasificacion = clasificar(self.edad)
     
     #Getters
@@ -72,4 +70,30 @@ class Paciente:
         self.fecha_nacimiento = date.fromisoformat(fecha)
         self.edad = calcular_edad(self.fecha_nacimiento)
         self.clasificacion = clasificar(self.edad)
+        
+        
+# Definimos el CRUD   
+class GestionDePacientes:
+    def __init__(self):
+        self.pila_pacientes = []
 
+    def agregar_paciente(self, paciente):
+        self.pila_pacientes.append(paciente)
+    
+    def leer_pacientes(self):
+        for paciente in self.pila_pacientes:
+            print("Nombre:", paciente.nombre)
+            print("Apellido:", paciente.apellido)
+            print("Tipo de ID:", paciente.tipo_documento)
+            print("Número de ID:", paciente.documento_identidad)
+            print("Fecha de Nacimiento:", paciente.fecha_nacimiento)
+            print("Edad:", paciente.edad)
+            print("Clasificación:", paciente.clasificacion)
+            print() 
+    
+    def eliminar_paciente(self, documento_identidad):
+        for i, paciente in enumerate(self.pila_pacientes):
+            if paciente.documento_identidad == documento_identidad:
+                self.pila_pacientes.pop(i)
+                return True
+        return False
