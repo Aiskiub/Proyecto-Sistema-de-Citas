@@ -1,4 +1,5 @@
 from datetime import date
+from utils.stack import Stack
 
 # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
 def calcular_edad(fecha_nacimiento):
@@ -75,25 +76,30 @@ class Paciente:
 # Definimos el CRUD   
 class GestionDePacientes:
     def __init__(self):
-        self.pila_pacientes = []
-
+        self.pila_pacientes = Stack()  # Cambiamos la lista por una pila
+        
     def agregar_paciente(self, paciente):
-        self.pila_pacientes.append(paciente)
+        self.pila_pacientes.push(paciente)
     
     def leer_pacientes(self):
-        for paciente in self.pila_pacientes:
-            print("Nombre:", paciente.nombre)
-            print("Apellido:", paciente.apellido)
-            print("Tipo de ID:", paciente.tipo_documento)
-            print("Número de ID:", paciente.documento_identidad)
-            print("Fecha de Nacimiento:", paciente.fecha_nacimiento)
-            print("Edad:", paciente.edad)
-            print("Clasificación:", paciente.clasificacion)
-            print() 
+        pacientes = []
+        current_node = self.pila_pacientes.top
+        while current_node is not None:
+            paciente = current_node.valor
+            pacientes.append(paciente)
+            current_node = current_node.next
+        return pacientes
     
-    def eliminar_paciente(self, documento_identidad):
-        for i, paciente in enumerate(self.pila_pacientes):
-            if paciente.documento_identidad == documento_identidad:
-                self.pila_pacientes.pop(i)
+    def borrar_paciente(self, documento_identidad):
+        current_node = self.pila_pacientes.top
+        prev_node = None
+        while current_node is not None:
+            if current_node.valor.documento_identidad == documento_identidad:
+                if prev_node is None:
+                    self.pila_pacientes.pop()  # Eliminar el primer elemento de la pila
+                else:
+                    prev_node.next = current_node.next  # Saltar el nodo actual
                 return True
+            prev_node = current_node
+            current_node = current_node.next
         return False
