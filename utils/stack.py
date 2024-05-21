@@ -1,27 +1,17 @@
-from utils.node import Node
+from utils import node
 
 class Stack:
     def __init__(self):
-        self.top = None
+        self.items = []
         
-    def is_empty(self):
-        return self.top is None
+    def is_empty(self): # Metodo para verificar si la pila esta vacia
+        return self.items == []
         
-    def push(self, item):
-        new_node = Node(item)
-        new_node.next = self.top
-        self.top = new_node
+    def push(self, item): # Metodo para insertar elementos a la pila
+        self.items.insert(0, item)
+              
+    def pop(self): # Metodo para eliminar el ultimo elemento apilado
+        return self.items.pop(0)
         
-    def pop(self):
-        if self.is_empty():
-            return None
-        else:
-            popped_node = self.top
-            self.top = self.top.next
-            return popped_node.valor
-        
-    def print_stack(self):
-        current = self.top
-        while current:
-            print(current.valor)
-            current = current.next
+    def print_stack(self): # Metodo para mostrar los elementos de la pila
+        print(self.items)

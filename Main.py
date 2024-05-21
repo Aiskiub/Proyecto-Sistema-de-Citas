@@ -1,4 +1,5 @@
-from pacientes.paciente import GestionDePacientes, Paciente
+from pacientes.paciente import Paciente
+from pacientes.GestionDePacientes import GestionDePacientes
 from datetime import date
 
 def main():
@@ -16,7 +17,7 @@ def main():
             # Leer pacientes
             print("Pacientes en la pila:")
             for paciente in gestion_pacientes.leer_pacientes():
-                print(f"Nombre: {paciente.nombre}, Apellido: {paciente.apellido}, Fecha de nacimiento: {paciente.fecha_nacimiento}")
+                print(f"Nombre: {paciente.nombre}, Apellido: {paciente.apellido}, Fecha de nacimiento: {paciente.fecha_nacimiento}, Edad: {paciente.edad}, Clasificación: {paciente.clasificacion}")
         elif opcion == "2":
             # Agregar paciente
             nombre = input("Ingrese el nombre del paciente: ")

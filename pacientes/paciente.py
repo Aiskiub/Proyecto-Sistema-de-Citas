@@ -1,5 +1,5 @@
 from datetime import date
-from utils.stack import Stack
+from utils.stack_pacientes import Stack
 
 # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
 def calcular_edad(fecha_nacimiento):
@@ -73,33 +73,5 @@ class Paciente:
         self.clasificacion = clasificar(self.edad)
         
         
-# Definimos el CRUD   
-class GestionDePacientes:
-    def __init__(self):
-        self.pila_pacientes = Stack()  # Cambiamos la lista por una pila
-        
-    def agregar_paciente(self, paciente):
-        self.pila_pacientes.push(paciente)
-    
-    def leer_pacientes(self):
-        pacientes = []
-        current_node = self.pila_pacientes.top
-        while current_node is not None:
-            paciente = current_node.valor
-            pacientes.append(paciente)
-            current_node = current_node.next
-        return pacientes
-    
-    def borrar_paciente(self, documento_identidad):
-        current_node = self.pila_pacientes.top
-        prev_node = None
-        while current_node is not None:
-            if current_node.valor.documento_identidad == documento_identidad:
-                if prev_node is None:
-                    self.pila_pacientes.pop()  # Eliminar el primer elemento de la pila
-                else:
-                    prev_node.next = current_node.next  # Saltar el nodo actual
-                return True
-            prev_node = current_node
-            current_node = current_node.next
-        return False
+
+
