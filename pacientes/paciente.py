@@ -1,12 +1,12 @@
 from datetime import date
+from utils.stack_pacientes import Stack
 
 # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
 def calcular_edad(fecha_nacimiento):
-        hoy = date.today()
-        if fecha_nacimiento > hoy:
-            return hoy.year - fecha_nacimiento.year - 1
-        else:
-            return hoy.year - fecha_nacimiento.year
+    fecha_actual = date.today()
+    resultado = fecha_actual.year - fecha_nacimiento.year
+    resultado -= ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+    return resultado
 
 # Clasificamos la edad de un paciente en función de su edad
 def clasificar(edad):
@@ -29,44 +29,49 @@ def clasificar(edad):
         
 # Definimos la clase Paciente
 class Paciente:
-    def __init__(self, nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento, edad=None, historial=None, cita=None, clasificacion=None):
+    def __init__(self, nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento):
         self.nombre = nombre
         self.apellido = apellido
         self.tipo_documento = tipo_documento
         self.documento_identidad = documento_identidad
         self.fecha_nacimiento = fecha_nacimiento
-        self.edad = calcular_edad(fecha_nacimiento)
-        self.clasificacion = clasificar(edad)
-
-
-# Definimos el CRUD   
-class GestionDePacientes:
-    def __init__(self):
-        self.pila_pacientes = []
-
-    def agregar_paciente(self, paciente):
-        self.pila_pacientes.append(paciente)
+        self.edad = calcular_edad(self.fecha_nacimiento)
+        self.clasificacion = clasificar(self.edad)
+    
+    #Getters
+    def getNombre(self):
+        return self.nombre
+    def getApellido(self):
+        return self.apellido
+    def getTipoID(self):
+        return self.tipo_id
+    def getID(self):
+        return self.id
+    def getFecha(self):
+        return self.fecha_nacimiento
+    def getEdad(self):
+        return self.edad
+    def getHistorial(self):
+        return self.historial
+    def getCita(self):
+        return self.cita
+    def getClasificacion(self):
+        return self.clasificacion
+    
+    #Setters
+    def setNombre(self, nombre):
+        self.nombre = nombre
+    def setApellido(self, apellido):
+        self.apellido = apellido
+    def setTipoID(self, tipo_id):
+        self.tipo_id = tipo_id
+    def setID(self, id):
+        self.id = id
+    def setFecha(self, fecha): #Si se cambia la fecha de nacimiento, automáticamente se actualizan los campos de edad y clasificación
+        self.fecha_nacimiento = date.fromisoformat(fecha)
+        self.edad = calcular_edad(self.fecha_nacimiento)
+        self.clasificacion = clasificar(self.edad)
         
-    def leer_paciente(self, documento_identidad):
-        for paciente in self.pila_pacientes:
-            if paciente.documento_identidad == documento_identidad:
-                return paciente
-        return None
-    
-    def actualizar_paciente(self, documento_identidad, paciente_actualizado):
-        for i, paciente in enumerate(self.pila_pacientes):
-            if paciente.documento_identidad == documento_identidad:
-                self.pila_pacientes[i] = paciente_actualizado
-                return True
-        return False
-    
-    def eliminar_paciente(self, documento_identidad):
-        for i, paciente in enumerate(self.pila_pacientes):
-            if paciente.documento_identidad == documento_identidad:
-                self.pila_pacientes.pop(i)
-                return True
-        return False
-    
-
+        
 
 
