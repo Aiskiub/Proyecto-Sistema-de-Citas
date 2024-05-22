@@ -19,6 +19,14 @@ class GestionDePacientes:
             print("No hay pacientes en la pila.")
         return pacientes
     
+    def buscar_paciente(self, documento_identidad):
+        current_node = self.pila_pacientes.top
+        while current_node is not None:
+            if current_node.valor.documento_identidad == documento_identidad:
+                return current_node.valor
+            current_node = current_node.next
+        return None
+    
     def borrar_paciente(self, documento_identidad):
         current_node = self.pila_pacientes.top
         prev_node = None

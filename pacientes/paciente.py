@@ -37,6 +37,8 @@ class Paciente:
         self.fecha_nacimiento = fecha_nacimiento
         self.edad = calcular_edad(self.fecha_nacimiento)
         self.clasificacion = clasificar(self.edad)
+        self.cita = None
+        self.tiene_cita = False
     
     #Getters
     def getNombre(self):
