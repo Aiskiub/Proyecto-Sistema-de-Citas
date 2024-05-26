@@ -19,11 +19,6 @@ class MallaCitas:
             if cita.fecha_programacion == fecha and cita.hora_asignacion == hora:
                 return cita
         return None
-
-
-def cita():
-    print('Cita de la semana:')  
-    print('Número aleatorio:', utils.random_number())
     
     
 
