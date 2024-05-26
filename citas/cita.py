@@ -1,8 +1,14 @@
-import utils.algoritmos as utils
+from datetime import datetime
 
-def cita():
-    print('Cita de la semana:')  
-    print('Número aleatorio:', utils.random_number())
+class Cita:
+    def __init__(self, paciente, medico, fecha_solicitud, fecha_programacion, hora_asignacion, consultorio):
+        self.paciente = paciente
+        self.medico = medico
+        self.fecha_solicitud = fecha_solicitud
+        self.fecha_programacion = fecha_programacion
+        self.hora_asignacion = hora_asignacion
+        self.consultorio = consultorio
+        self.estado = 'no disponible'
     
-    
-
+    def __str__(self):
+        return f"Cita: {self.paciente.nombre} {self.paciente.apellido} con Dr. {self.medico.nombre} en consultorio {self.consultorio} el {self.fecha_programacion} a las {self.hora_asignacion}. Estado: {self.estado}"

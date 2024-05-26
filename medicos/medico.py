@@ -1,34 +1,49 @@
-import datetime
+from datetime import datetime, timedelta
 
 class Medico:
-    def __init__(self, nombre, apellido, registro_medico):
+    def __init__(self, nombre, apellido, especialidad, numero_rm):
         self.nombre = nombre
         self.apellido = apellido
-        self.registro_medico = registro_medico
-        self.malla_citas = []
-
-    def turnosMedicos(nombre):
-        hora_actual = datetime.datetime.now()
-        entrada = hora_actual.strftime("%H:%M:%S")
-        print("Su hora de entrada es: ",entrada)
-        hora_sumada = hora_actual + datetime.timedelta(hours=10)
-        salida = hora_sumada.strftime("%H:%M:%S")
-        print("Doctor",nombre,", el consultorio 100 estará disponible para usted de",entrada,"a",salida)
-
-    #nombre = input("Ingrese su nombre: ")
-    #TurnosMedicos(nombre)
-
-    def agregarCita(self, cita):
-        self.malla_citas.append(cita)
-
-    def cancelarCita(self, cita):
-        if cita in self.malla_citas:
-            self.malla_citas.remove(cita)
-            return True
-        return False
-
-    def estaDisponible(self, fecha, hora):
-        for cita in self.malla_citas:
-            if cita.fecha == fecha and cita.hora == hora:
+        self.especialidad = especialidad
+        self.numero_rm = numero_rm
+        self.citas = []  # Lista para las citas del médico
+    
+    def verificar_disponibilidad(self, fecha_programacion, hora_asignacion, duracion):
+        for cita in self.citas:
+            cita_inicio = datetime.combine(cita.fecha_programacion, cita.hora_asignacion)
+            cita_fin = cita_inicio + timedelta(minutes=cita.duracion)
+            nueva_cita_inicio = datetime.combine(fecha_programacion, hora_asignacion)
+            nueva_cita_fin = nueva_cita_inicio + timedelta(minutes=duracion)
+            
+            if not (nueva_cita_fin <= cita_inicio or nueva_cita_inicio >= cita_fin):
                 return False
         return True
+    
+    def ordenar_citas(self):
+        self.citas.sort(key=lambda cita: (cita.fecha_programacion, cita.hora_asignacion))
+    
+    """ MUCHACHOS eso de: lambda cita: (cita.fecha_programacion, cita.hora_asignacion) define una función anónima, 
+        la cual toma argumento cita y devuelve una tupla ( o sea 2) (cita.fecha_programacion, cita.hora_asignacion),
+        y esa cosa de sort(key=.....) utiliza esta función para extraer "la clave" de ordenamiento de cada cita en la lista self.malla_citas.
+        Como resultado, las citas se ordenan primero por fecha_programacion y, en caso de que sea el mismo dia, por hora_asignacion """
+
+    """Si no les gusto podemos poner esta alternativa:
+    
+    def obtener_clave_orden(cita):
+        return (cita.fecha_programacion, cita.hora_asignacion)
+    
+
+    def ordenar_citas(self):
+        self.citas.sort(key=obtener_clave_orden)"""
+
+
+    def agregar_cita(self, cita):
+        self.citas.append(cita)
+        self.ordenar_citas()
+    
+    def cancelar_cita(self, cita):
+        self.citas.remove(cita)
+        self.ordenar_citas()
+
+    def __str__(self):
+        return f"Dr. {self.nombre} {self.apellido} ({self.especialidad}), RM: {self.numero_rm}"
