@@ -11,4 +11,4 @@ class Cita:
         self.estado = 'no disponible'
     
     def __str__(self):
-        return f"Cita: {self.paciente.nombre} {self.paciente.apellido} con Dr. {self.medico.nombre} en consultorio {self.consultorio} el {self.fecha_programacion} a las {self.hora_asignacion}. Estado: {self.estado}"
+        return f"Cita: {self.paciente.nombre} {self.paciente.apellido} con Dr. {self.medico.nombre} {self.medico.apellido} en consultorio {self.medico.consultorio} el {self.fecha_programacion} a las {self.hora_asignacion}. Estado: {self.estado}"

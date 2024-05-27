@@ -1,21 +1,34 @@
+import pandas as pd
 from medicos.medico import Medico
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
 from citas.GestionDeCitas import GestionDeCitas
 from datetime import date
+import os
 
 def main():
-    #Aqui se crean instancias de Gestión de Pacientes y Gestión de Citas
+    # Aquí se crean instancias de Gestión de Pacientes y Gestión de Citas
     gestion_pacientes = GestionDePacientes()
     gestion_citas = GestionDeCitas()
     
+    # Ruta absoluta al archivo Excel
+    excel_file = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura Pruebas/archivo.xlsx'
+
+    # Verificar si el archivo existe
+    if not os.path.exists(excel_file):
+        print(f"El archivo no existe: {excel_file}")
+        return
     
-    #médicos preestablecidos
-    medico1 = Medico("Juan Carlos", "Fetuchini", "General", "RM123")
-    medico2 = Medico("Luz Maribel", "Meza", "General", "RM456")
-    gestion_citas.agregar_medico(medico1)
-    gestion_citas.agregar_medico(medico2)
-    
+    # Cargar datos de médicos desde el archivo Excel
+    gestion_citas.cargar_medicos_desde_excel(excel_file)
+
+    # Cargar datos de médicos desde la hoja de Excel 'medicos'
+    try:
+        medicos_df = pd.read_excel(excel_file, sheet_name='medicos')
+    except Exception as e:
+        print(f"Error al cargar datos de médicos desde el archivo Excel: {e}")
+        return
+        
     while True:
         print("Menú de opciones:")
         print("1. Leer pacientes")
@@ -74,8 +87,8 @@ def main():
                     medico_nombre = input("Ingrese el nombre del médico: ")
                     hora_inicio = input("Ingrese la fecha y hora de la cita (YYYY-MM-DD HH:MM): ")
                     duracion = int(input("Ingrese la duración de la cita en minutos: "))
-                    consultorio = input("Ingrese el número del consultorio: ")
-                    gestion_citas.asignar_cita(paciente, medico_nombre, hora_inicio, duracion, consultorio)
+                    #consultorio = input("Ingrese el número del consultorio: ")
+                    gestion_citas.asignar_cita(paciente, medico_nombre, hora_inicio, duracion)
             else:
                 print("No se encontró ningún paciente con ese documento de identidad.")
         elif opcion == "6":
@@ -98,4 +111,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

@@ -1,11 +1,14 @@
+import pandas as pd
 from datetime import datetime, timedelta
+import os
 
 class Medico:
-    def __init__(self, nombre, apellido, especialidad, numero_rm):
-        self.nombre = nombre
-        self.apellido = apellido
-        self.especialidad = especialidad
-        self.numero_rm = numero_rm
+    def __init__(self, datos_medico):
+        self.nombre = datos_medico['nombre']
+        self.apellido = datos_medico['apellido']
+        self.especialidad = datos_medico['especialidad']
+        self.numero_rm = datos_medico['numero_rm']
+        self.consultorio = datos_medico['consultorio']
         self.citas = []  # Lista para las citas del médico
     
     def verificar_disponibilidad(self, fecha_programacion, hora_asignacion, duracion):
@@ -22,21 +25,6 @@ class Medico:
     def ordenar_citas(self):
         self.citas.sort(key=lambda cita: (cita.fecha_programacion, cita.hora_asignacion))
     
-    """ MUCHACHOS eso de: lambda cita: (cita.fecha_programacion, cita.hora_asignacion) define una función anónima, 
-        la cual toma argumento cita y devuelve una tupla ( o sea 2) (cita.fecha_programacion, cita.hora_asignacion),
-        y esa cosa de sort(key=.....) utiliza esta función para extraer "la clave" de ordenamiento de cada cita en la lista self.malla_citas.
-        Como resultado, las citas se ordenan primero por fecha_programacion y, en caso de que sea el mismo dia, por hora_asignacion """
-
-    """Si no les gusto podemos poner esta alternativa:
-    
-    def obtener_clave_orden(cita):
-        return (cita.fecha_programacion, cita.hora_asignacion)
-    
-
-    def ordenar_citas(self):
-        self.citas.sort(key=obtener_clave_orden)"""
-
-
     def agregar_cita(self, cita):
         self.citas.append(cita)
         self.ordenar_citas()
