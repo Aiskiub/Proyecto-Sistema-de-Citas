@@ -1,13 +1,13 @@
 from datetime import datetime
 
 class Cita:
-    def __init__(self, paciente, medico, fecha_solicitud, fecha_programacion, hora_asignacion, consultorio):
+    def __init__(self, paciente, medico, fecha_solicitud, fecha_programacion, hora_asignacion):
         self.paciente = paciente
         self.medico = medico
-        self.fecha_solicitud = datetime.strptime(fecha_solicitud, "%Y-%m-%d")
+        self.fecha_solicitud = datetime.now()
         self.fecha_programacion = datetime.strptime(fecha_programacion, "%Y-%m-%d")
         self.hora_asignacion = hora_asignacion
-        self.consultorio = consultorio
+        self.consultorio = self.medico.consultorio
         self.estado = 'no disponible'
 
     def asignar_medico(self, medico):

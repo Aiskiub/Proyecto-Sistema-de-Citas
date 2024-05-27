@@ -1,4 +1,4 @@
-from utils.stack_pacientes import Stack
+from utils.stack import Stack
 
 class GestionDePacientes:
     def __init__(self):
@@ -41,7 +41,19 @@ class GestionDePacientes:
             current_node = current_node.next
         return False
     
-    def actualizar_paciente(self, documento_identidad, nuevo_nombre, nuevo_apellido):
+    def actualizar_paciente(self, documentoBuscado, campo, nuevoValor):
+        current_node = self.pila_pacientes.top
+        found = False
+        while current_node is not None:
+            if current_node.valor.documento_identidad == documentoBuscado:
+                setattr(current_node.valor, campo, nuevoValor)
+                found = True
+                break
+        if found == False:
+            print("No se encontró ningún paciente con ese documento de identidad.")
+        
+
+''' def actualizar_pacientes(self, documento_identidad, nuevo_nombre, nuevo_apellido):
         current_node = self.pila_pacientes.top
         while current_node is not None:
             if current_node.valor.documento_identidad == documento_identidad:
@@ -49,4 +61,4 @@ class GestionDePacientes:
                 current_node.valor.apellido = nuevo_apellido
                 return True
             current_node = current_node.next
-        return False
+        return False'''
