@@ -66,12 +66,5 @@ class GestionDePacientes:
             current_node = current_node.next
         return False
     
-    def actualizar_paciente(self, documento_identidad, nuevo_nombre, nuevo_apellido):
-        current_node = self.pila_pacientes.top
-        while current_node is not None:
-            if current_node.valor.documento_identidad == documento_identidad:
-                current_node.valor.nombre = nuevo_nombre
-                current_node.valor.apellido = nuevo_apellido
-                return True
-            current_node = current_node.next
-        return False
+    def actualizar_paciente(self, paciente, campo, nuevoValor):
+        setattr(paciente, campo, nuevoValor)

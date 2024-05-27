@@ -2,6 +2,8 @@ import pandas as pd
 from medicos.medico import Medico
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
+from pacientes.actualizarPacientes import actualizarDatos
+from pacientes.mostrarPacientes import mostrarPacientes
 from citas.GestionDeCitas import GestionDeCitas
 from datetime import date, datetime, time
 from medicos.GestionDeMedicos import GestionDeMedicos
@@ -15,8 +17,11 @@ def main():
     gestion_medico = GestionDeMedicos()
 
     # Ruta absoluta al archivo Excel
-    ruta_excel_medicos = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/archivo.xlsx'
-    ruta_excel_pacientes = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx'
+    '''ruta_excel_medicos = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/archivo.xlsx'
+    ruta_excel_pacientes = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx'''
+    #Ruta Valerie
+    ruta_excel_medicos = "C:/Users/PC_User/Documents/Code/estructura de datos/Proyecto-Sistema-de-Citas/excel/archivo.xlsx"
+    ruta_excel_pacientes = "C:/Users/PC_User/Documents/Code/estructura de datos/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx" 
 
     # Verificar si los archivos existen
     if not os.path.exists(ruta_excel_medicos):
@@ -51,9 +56,10 @@ def main():
 
         if opcion == "1":
             # Leer pacientes
+            pilaPacientes = gestion_pacientes.leer_pacientes()
             print("Pacientes en la pila:")
-            for paciente in gestion_pacientes.leer_pacientes():
-                print(f"Nombre: {paciente.nombre}, Apellido: {paciente.apellido}, Fecha de nacimiento: {paciente.fecha_nacimiento}, Edad: {paciente.edad}, Clasificación: {paciente.clasificacion}")
+            mostrarPacientes(pilaPacientes)
+
         elif opcion == "2":
             # Agregar paciente
             nombre = input("Ingrese el nombre del paciente: ")
@@ -76,12 +82,10 @@ def main():
             gestion_pacientes.agregar_paciente(paciente)
         elif opcion == "3":
             # Actualizar paciente
-            documento_identidad = input(
-                "Ingrese el documento de identidad del paciente que desea actualizar: ")
-            nuevo_nombre = input("Ingrese el nuevo nombre del paciente: ")
-            nuevo_apellido = input("Ingrese el nuevo apellido del paciente: ")
-            if gestion_pacientes.actualizar_paciente(documento_identidad, nuevo_nombre, nuevo_apellido):
-                print("Paciente actualizado correctamente.")
+            documento_identidad = input("Ingrese el documento de identidad del paciente que desea actualizar: ")
+            paciente = gestion_pacientes.buscar_paciente(documento_identidad)
+            if paciente:
+                actualizarDatos(gestion_pacientes, paciente)
             else:
                 print("No se encontró ningún paciente con ese documento de identidad.")
         elif opcion == "4":
