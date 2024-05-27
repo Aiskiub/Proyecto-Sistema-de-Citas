@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Cita:
-    def __init__(self, paciente, medico, fecha_solicitud, fecha_programacion, hora_asignacion):
+    def __init__(self, paciente, medico, fecha_programacion, hora_asignacion):
         self.paciente = paciente
         self.medico = medico
         self.fecha_solicitud = datetime.now()

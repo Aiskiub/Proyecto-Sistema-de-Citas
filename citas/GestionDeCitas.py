@@ -10,15 +10,13 @@ class GestionDeCitas:
     def agregar_medico(self, medico):
         self.medicos.append(medico)
 
-    def asignar_cita(self, paciente, medico_nombre, hora_inicio, duracion):
+    def asignar_cita(self, paciente, fecha, hora):
         try:
-            hora_inicio = datetime.strptime(hora_inicio, '%Y-%m-%d %H:%M')
-            duracion = timedelta(minutes=duracion)
+            fechaCita = datetime.strptime(fecha, '%Y-%m-%d')
+            horaCita = datetime.strptime(hora, '%H:%M')
         except ValueError as e:
             print(f"Error al parsear la fecha/hora: {e}")
             return False
-        
-        nueva_cita = Cita(paciente, None, datetime.now().strftime('%Y-%m-%d'), hora_inicio.strftime('%Y-%m-%d'), hora_inicio.strftime('%H:%M'))
         
         for medico in self.medicos:
             if medico.nombre == medico_nombre:
@@ -35,6 +33,7 @@ class GestionDeCitas:
         
         print(f"No se encontró al médico {medico_nombre}.")
         return False
+        nueva_cita = Cita(paciente, None, hora_inicio.strftime('%Y-%m-%d'), hora_inicio.strftime('%H:%M'))
 
     def cancelar_cita(self, paciente):
         if paciente.cita:

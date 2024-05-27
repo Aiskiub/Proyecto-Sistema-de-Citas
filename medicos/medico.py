@@ -9,12 +9,12 @@ class Medico:
         self.citas = []  # Lista para las citas del médico
         self.consultorio = consultorio
     
-    def verificar_disponibilidad(self, fecha_programacion, hora_asignacion, duracion):
+    def verificar_disponibilidad(self, fecha_programacion, hora_asignacion):
         for cita in self.citas:
             cita_inicio = datetime.combine(cita.fecha_programacion, cita.hora_asignacion)
-            cita_fin = cita_inicio + timedelta(minutes=cita.duracion)
+            cita_fin = cita_inicio + timedelta(minutes=30)
             nueva_cita_inicio = datetime.combine(fecha_programacion, hora_asignacion)
-            nueva_cita_fin = nueva_cita_inicio + timedelta(minutes=duracion)
+            nueva_cita_fin = nueva_cita_inicio + timedelta(minutes=30)
             
             if not (nueva_cita_fin <= cita_inicio or nueva_cita_inicio >= cita_fin):
                 return False

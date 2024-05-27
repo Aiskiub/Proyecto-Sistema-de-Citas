@@ -76,11 +76,9 @@ def main():
                 if paciente.cita:
                     print(f"El paciente {paciente.nombre} {paciente.apellido} ya tiene una cita asignada.")
                 else:
-                    medico_nombre = input("Ingrese el nombre del médico: ")
-                    hora_inicio = input("Ingrese la fecha y hora de la cita (YYYY-MM-DD HH:MM): ")
-                    duracion = int(input("Ingrese la duración de la cita en minutos: "))
-                    consultorio = input("Ingrese el número del consultorio: ")
-                    gestion_citas.asignar_cita(paciente, medico_nombre, hora_inicio, duracion, consultorio)
+                    fechaCita = input("Ingrese la fecha para la cita (YYYY-MM-DD): ")
+                    horaCita = input("Ingrese la hora de la cita (HH:MM): ")
+                    gestion_citas.asignar_cita(paciente, fechaCita, horaCita)
             else:
                 print("No se encontró ningún paciente con ese documento de identidad.")
         elif opcion == "6":
