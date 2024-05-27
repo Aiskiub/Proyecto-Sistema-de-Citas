@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import os
+from medicos.malla import Malla
 
 class Medico:
     def __init__(self, datos_medico):
@@ -44,6 +45,11 @@ class Medico:
             # Si existe, eliminar la cita de la lista de citas para esa fecha
             self.citas[fecha_programacion].remove(cita)
 
-
     def __str__(self):
         return f"Dr. {self.nombre} {self.apellido} ({self.especialidad}), RM: {self.numero_rm}"
+    
+    def generarCitas(self):
+        malla = Malla()
+        self.citas = malla.generarMalla()
+        print (self.citas)
+    
