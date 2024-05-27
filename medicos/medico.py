@@ -9,29 +9,41 @@ class Medico:
         self.especialidad = datos_medico['especialidad']
         self.numero_rm = datos_medico['numero_rm']
         self.consultorio = datos_medico['consultorio']
-        self.citas = []  # Lista para las citas del médico
+        self.citas = {}  #Diccionario para almacenar la malla de citas del médico
     
     def verificar_disponibilidad(self, fecha_programacion, hora_asignacion, duracion):
-        for cita in self.citas:
-            cita_inicio = datetime.combine(cita.fecha_programacion, cita.hora_asignacion)
-            cita_fin = cita_inicio + timedelta(minutes=cita.duracion)
-            nueva_cita_inicio = datetime.combine(fecha_programacion, hora_asignacion)
-            nueva_cita_fin = nueva_cita_inicio + timedelta(minutes=duracion)
-            
-            if not (nueva_cita_fin <= cita_inicio or nueva_cita_inicio >= cita_fin):
-                return False
+        for citas_en_fecha in self.citas.values():
+            for cita in citas_en_fecha:
+                cita_inicio = datetime.combine(cita.fecha_programacion, cita.hora_asignacion)
+                cita_fin = cita_inicio + timedelta(minutes=cita.duracion)
+                nueva_cita_inicio = datetime.combine(fecha_programacion, hora_asignacion)
+                nueva_cita_fin = nueva_cita_inicio + timedelta(minutes=duracion)
+                
+                if not (nueva_cita_fin <= cita_inicio or nueva_cita_inicio >= cita_fin):
+                    return False
         return True
     
-    def ordenar_citas(self):
-        self.citas.sort(key=lambda cita: (cita.fecha_programacion, cita.hora_asignacion))
-    
     def agregar_cita(self, cita):
-        self.citas.append(cita)
-        self.ordenar_citas()
-    
+        # Obtener la fecha y hora de programación de la cita
+        fecha_hora_programacion = cita.fecha_hora_programacion
+        
+        # Verificar si ya existe una lista de citas para esa fecha
+        if fecha_hora_programacion.date() not in self.citas:
+            # Si no existe, crear una nueva lista de citas para esa fecha
+            self.citas[fecha_hora_programacion.date()] = []
+        
+        # Agregar la cita a la lista de citas para esa fecha
+        self.citas[fecha_hora_programacion.date()].append(cita)
+
     def cancelar_cita(self, cita):
-        self.citas.remove(cita)
-        self.ordenar_citas()
+        # Obtener la fecha de programación de la cita
+        fecha_programacion = cita.fecha_programacion.date()
+        
+        # Verificar si existe una lista de citas para esa fecha
+        if fecha_programacion in self.citas:
+            # Si existe, eliminar la cita de la lista de citas para esa fecha
+            self.citas[fecha_programacion].remove(cita)
+
 
     def __str__(self):
         return f"Dr. {self.nombre} {self.apellido} ({self.especialidad}), RM: {self.numero_rm}"

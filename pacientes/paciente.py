@@ -75,5 +75,3 @@ class Paciente:
         self.clasificacion = clasificar(self.edad)
         
         
-
-
