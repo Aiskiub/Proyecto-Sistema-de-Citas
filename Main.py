@@ -68,7 +68,7 @@ def main():
                 try:
                     fecha_nacimiento = date.fromisoformat(fecha_nacimiento_str)
                     break
-                except ValueError:
+                except ValueError: 
                     print(
                         "Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")
             paciente = Paciente(nombre=nombre, apellido=apellido, tipo_documento=tipo_documento,
