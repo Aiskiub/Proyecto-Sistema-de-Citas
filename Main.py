@@ -3,34 +3,6 @@ from medicos.medico import Medico
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
 from citas.GestionDeCitas import GestionDeCitas
-<<<<<<< HEAD
-from datetime import date
-import os
-
-def main():
-    # Aquí se crean instancias de Gestión de Pacientes y Gestión de Citas
-    gestion_pacientes = GestionDePacientes()
-    gestion_citas = GestionDeCitas()
-    
-    # Ruta absoluta al archivo Excel
-    excel_file = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura Pruebas/archivo.xlsx'
-
-    # Verificar si el archivo existe
-    if not os.path.exists(excel_file):
-        print(f"El archivo no existe: {excel_file}")
-        return
-    
-    # Cargar datos de médicos desde el archivo Excel
-    gestion_citas.cargar_medicos_desde_excel(excel_file)
-
-    # Cargar datos de médicos desde la hoja de Excel 'medicos'
-    try:
-        medicos_df = pd.read_excel(excel_file, sheet_name='medicos')
-    except Exception as e:
-        print(f"Error al cargar datos de médicos desde el archivo Excel: {e}")
-        return
-        
-=======
 from datetime import date, datetime, time
 from medicos.GestionDeMedicos import GestionDeMedicos
 import os
@@ -43,8 +15,8 @@ def main():
     gestion_medico = GestionDeMedicos()
 
     # Ruta absoluta al archivo Excel
-    ruta_excel_medicos = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/archivo.xlsx'
-    ruta_excel_pacientes = 'D:/PROGRAMACION/Proyecto/SistemaCitas/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx'
+    ruta_excel_medicos = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura/Proyecto-Sistema-de-Citas/excel/archivo.xlsx'
+    ruta_excel_pacientes = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx'
 
     # Verificar si los archivos existen
     if not os.path.exists(ruta_excel_medicos):
@@ -64,7 +36,6 @@ def main():
     # Cargar datos de pacientes desde el archivo Excel
     gestion_pacientes.cargar_pacientes_desde_excel(ruta_excel_pacientes)
 
->>>>>>> dev01
     while True:
         print("Menú de opciones:")
         print("1. Leer pacientes")
@@ -87,15 +58,10 @@ def main():
             # Agregar paciente
             nombre = input("Ingrese el nombre del paciente: ")
             apellido = input("Ingrese los apellidos del paciente: ")
-<<<<<<< HEAD
-            tipo_documento = input("Ingrese el tipo de documento del paciente (CC/TI/DIG): ")
-            documento_identidad = input("Ingrese el documento de identidad del paciente: ")
-=======
             tipo_documento = input(
                 "Ingrese el tipo de documento del paciente (CC/TI/DIG): ")
             documento_identidad = input(
                 "Ingrese el documento de identidad del paciente: ")
->>>>>>> dev01
             while True:
                 fecha_nacimiento_str = input(
                     "Ingrese la fecha de nacimiento del paciente (YYYY-MM-DD): ")
@@ -136,13 +102,6 @@ def main():
                     print(
                         f"El paciente {paciente.nombre} {paciente.apellido} ya tiene una cita asignada.")
                 else:
-<<<<<<< HEAD
-                    medico_nombre = input("Ingrese el nombre del médico: ")
-                    hora_inicio = input("Ingrese la fecha y hora de la cita (YYYY-MM-DD HH:MM): ")
-                    duracion = int(input("Ingrese la duración de la cita en minutos: "))
-                    #consultorio = input("Ingrese el número del consultorio: ")
-                    gestion_citas.asignar_cita(paciente, medico_nombre, hora_inicio, duracion)
-=======
                     while True:
                         gestion_medico.mostrar_medicos_disponibles()
                         rm_medico = input(
@@ -168,7 +127,6 @@ def main():
                         input("Ingrese la duración de la cita en minutos: "))
                     gestion_citas.asignar_cita(
                         paciente, rm_medico, fecha_programacion, hora_asignacion, duracion)
->>>>>>> dev01
             else:
                 print("No se encontró ningún paciente con ese documento de identidad.")
 
