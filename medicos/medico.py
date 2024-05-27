@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
 
 class Medico:
-    def __init__(self, nombre, apellido, especialidad, numero_rm):
+    def __init__(self, nombre, apellido, especialidad, numero_rm, consultorio):
         self.nombre = nombre
         self.apellido = apellido
         self.especialidad = especialidad
         self.numero_rm = numero_rm
         self.citas = []  # Lista para las citas del médico
+        self.consultorio = consultorio
     
     def verificar_disponibilidad(self, fecha_programacion, hora_asignacion, duracion):
         for cita in self.citas:

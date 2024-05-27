@@ -1,6 +1,8 @@
 from medicos.medico import Medico
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
+from pacientes.mostrarPacientes import mostrarPacientes
+from pacientes.actualizarPacientes import actualizarDatos
 from citas.GestionDeCitas import GestionDeCitas
 from datetime import date
 
@@ -11,8 +13,8 @@ def main():
     
     
     #médicos preestablecidos
-    medico1 = Medico("Juan Carlos", "Fetuchini", "General", "RM123")
-    medico2 = Medico("Luz Maribel", "Meza", "General", "RM456")
+    medico1 = Medico("Juan Carlos", "Fetuchini", "General", "RM123", "A01")
+    medico2 = Medico("Luz Maribel", "Meza", "General", "RM456", "A02")
     gestion_citas.agregar_medico(medico1)
     gestion_citas.agregar_medico(medico2)
     
@@ -29,9 +31,10 @@ def main():
         opcion = input("Ingrese el número de la opción que desea realizar: ")
         if opcion == "1":
             # Leer pacientes
+            pilaPacientes = gestion_pacientes.leer_pacientes()
             print("Pacientes en la pila:")
-            for paciente in gestion_pacientes.leer_pacientes():
-                print(f"Nombre: {paciente.nombre}, Apellido: {paciente.apellido}, Fecha de nacimiento: {paciente.fecha_nacimiento}, Edad: {paciente.edad}, Clasificación: {paciente.clasificacion}")
+            mostrarPacientes(pilaPacientes)
+            
         elif opcion == "2":
             # Agregar paciente
             nombre = input("Ingrese el nombre del paciente: ")
@@ -50,12 +53,14 @@ def main():
         elif opcion == "3":
             # Actualizar paciente
             documento_identidad = input("Ingrese el documento de identidad del paciente que desea actualizar: ")
-            nuevo_nombre = input("Ingrese el nuevo nombre del paciente: ")
+            actualizarDatos(gestion_pacientes, documento_identidad)
+
+            '''nuevo_nombre = input("Ingrese el nuevo nombre del paciente: ")
             nuevo_apellido = input("Ingrese el nuevo apellido del paciente: ")
             if gestion_pacientes.actualizar_paciente(documento_identidad, nuevo_nombre, nuevo_apellido):
                 print("Paciente actualizado correctamente.")
             else:
-                print("No se encontró ningún paciente con ese documento de identidad.")
+                print("No se encontró ningún paciente con ese documento de identidad.")'''
         elif opcion == "4":
             # Borrar paciente
             documento_identidad = input("Ingrese el documento de identidad del paciente que desea borrar: ")
