@@ -23,8 +23,8 @@ class GestionDePacientes:
                 
                 # Crear objeto Paciente con los datos obtenidos
                 paciente = Paciente(nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento)
-                self.pila_pacientes.push(paciente)
-                self.ordenarporDocumento()
+                self.agregar_paciente(paciente)
+                
 
             print("Pacientes cargados exitosamente desde el archivo Excel.")
         except Exception as e:
