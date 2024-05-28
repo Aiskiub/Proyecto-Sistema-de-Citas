@@ -112,7 +112,10 @@ def main():
                             "Ingrese el número de registro médico (RM) del médico: ")
                         medico = gestion_medico.buscar_medico_por_rm(rm_medico)
                         if medico:
-                            break
+                            fecha = input(
+                                "Ingrese una fecha para agendar su cita (dd/m/Y): ")
+                            medico.buscarCitasDisponibles(fecha)
+                            
                         else:
                             print(
                                 "No se encontró ningún médico con ese número de registro médico. Intente nuevamente.")
@@ -153,6 +156,7 @@ def main():
             # Salir
             print("Saliendo del programa...")
             break
+    
         else:
             print("Opción no válida. Por favor, ingrese un número válido.")
 
