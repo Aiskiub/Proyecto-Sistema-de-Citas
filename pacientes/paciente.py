@@ -1,5 +1,5 @@
 from datetime import date
-from utils.stack_pacientes import Stack
+from utils.stack import Stack
 
 # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
 def calcular_edad(fecha_nacimiento):

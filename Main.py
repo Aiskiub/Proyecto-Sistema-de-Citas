@@ -119,8 +119,8 @@ def main():
                             buscarCitasDisponibles(medico, fecha)
                             hora = input(
                                 "Seleccione un horario disponible (HH:MM): ")
-                            cita = Cita(paciente, medico, datetime.now(), hora)
-                            
+                            cita = Cita(paciente, medico, fecha, hora)
+
                             
                         else:
                             print(

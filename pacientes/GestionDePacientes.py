@@ -1,11 +1,12 @@
-from utils.stack_pacientes import Stack
+from utils.stack import Stack
+from utils.mergesort import mergeSort
 import pandas as pd
 from pacientes.paciente import Paciente
 from datetime import datetime
 
 class GestionDePacientes:
     def __init__(self):
-        self.pila_pacientes = Stack()  # Cambiamos la lista por una pila
+        self.pila_pacientes = Stack() # Cambiamos la lista por una pila
     
     def cargar_pacientes_desde_excel(self, ruta_excel_pacientes):
         try:
@@ -23,6 +24,7 @@ class GestionDePacientes:
                 # Crear objeto Paciente con los datos obtenidos
                 paciente = Paciente(nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento)
                 self.pila_pacientes.push(paciente)
+                self.ordenarporDocumento()
 
             print("Pacientes cargados exitosamente desde el archivo Excel.")
         except Exception as e:
@@ -30,15 +32,10 @@ class GestionDePacientes:
 
     def agregar_paciente(self, paciente):
         self.pila_pacientes.push(paciente)
+        self.ordenarporDocumento()
     
     def leer_pacientes(self):
-        pacientes = []
-        current_node = self.pila_pacientes.top
-        while current_node is not None:
-            paciente = current_node.valor
-            pacientes.append(paciente)
-            current_node = current_node.next
-        
+        pacientes = self.pila_pacientes.items
         if not pacientes:
             print("No hay pacientes en la pila.")
         return pacientes
@@ -68,3 +65,11 @@ class GestionDePacientes:
     
     def actualizar_paciente(self, paciente, campo, nuevoValor):
         setattr(paciente, campo, nuevoValor)
+
+    def ordenarporDocumento(self):
+        pila = self.pila_pacientes.items
+        mergeSort(pila, 0, len(pila)-1, lambda pacienteA, pacienteB: \
+                  int(pacienteA.documento_identidad) < int(pacienteB.documento_identidad))
+        self.pila_pacientes.items = pila
+        return
+    

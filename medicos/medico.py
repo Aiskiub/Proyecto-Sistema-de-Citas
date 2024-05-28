@@ -25,16 +25,15 @@ class Medico:
         return True
     
     def agregar_cita(self, cita):
+
         # Obtener la fecha y hora de programación de la cita
-        fecha_hora_programacion = cita.fecha_hora_programacion
+        fechaCita= cita.fecha_programacion
+        horaCita = cita.hora_asignacion
         
-        # Verificar si ya existe una lista de citas para esa fecha
-        if fecha_hora_programacion.date() not in self.citas:
-            # Si no existe, crear una nueva lista de citas para esa fecha
-            self.citas[fecha_hora_programacion.date()] = []
+        #Modificar disponibilidad en malla a 'false'
+        malla = self.citas
+        malla[fechaCita[horaCita]] = 'false'
         
-        # Agregar la cita a la lista de citas para esa fecha
-        self.citas[fecha_hora_programacion.date()].append(cita)
 
     def cancelar_cita(self, cita):
         # Obtener la fecha de programación de la cita
