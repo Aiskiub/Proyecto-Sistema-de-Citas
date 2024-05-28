@@ -1,13 +1,12 @@
 from datetime import datetime
 
 class Cita:
-    def __init__(self, paciente, medico, fecha_programacion, hora_asignacion, duracion, consultorio):
+    def __init__(self, paciente, medico, fecha_programacion, hora_asignacion):
         self.paciente = paciente
         self.medico = medico
         self.fecha_programacion = fecha_programacion
         self.hora_asignacion = hora_asignacion
-        self.duracion = duracion
-        self.consultorio = consultorio
+        self.consultorio = medico.consultorio
         self.estado = 'no disponible'
         # Combinar fecha_programacion y hora_asignacion en un objeto datetime
         self.fecha_hora_programacion = datetime(

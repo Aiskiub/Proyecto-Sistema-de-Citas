@@ -1,10 +1,12 @@
 import pandas as pd
 from medicos.medico import Medico
+from medicos.buscarCitasDisponibles import buscarCitasDisponibles
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
 from pacientes.actualizarPacientes import actualizarDatos
 from pacientes.mostrarPacientes import mostrarPacientes
 from citas.GestionDeCitas import GestionDeCitas
+from citas.cita import Cita
 from datetime import date, datetime, time
 from medicos.GestionDeMedicos import GestionDeMedicos
 import os
@@ -114,7 +116,11 @@ def main():
                         if medico:
                             fecha = input(
                                 "Ingrese una fecha para agendar su cita (dd/m/Y): ")
-                            medico.buscarCitasDisponibles(fecha)
+                            buscarCitasDisponibles(medico, fecha)
+                            hora = input(
+                                "Seleccione un horario disponible (HH:MM): ")
+                            cita = Cita(paciente, medico, datetime.now(), hora)
+                            
                             
                         else:
                             print(

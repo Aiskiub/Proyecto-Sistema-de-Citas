@@ -53,15 +53,6 @@ class Medico:
         self.citas = malla.generarMalla()
         print (self.citas)
     
-    def buscarCitasDisponibles(self, fecha):
-        for key in self.citas:
-            print (key)
-            if key == fecha:
-                print("Horarios disponibles: ")
-                print(self.citas[fecha])
-                return
-            else:
-                print("No hay citas en la fecha que indico, ingrese una fecha dentro de 30 dias a partir de hoy")
-                return
+    
 
     

@@ -8,14 +8,14 @@ class Malla:
         self.malla = {}
     
     def generarMalla(self):
-        franjas = ()
+        franjas = {}
         fecha = datetime.now()
         fechaFin = fecha + timedelta(days=30)
         horaFin = datetime.strptime(self.horaFinJornada, '%H:%M')
         while fecha <= fechaFin:
             hora = datetime.strptime(self.horaInicioJornada, '%H:%M')
             while hora <= horaFin:
-                franjas+=hora.strftime('%H:%M'),
+                franjas[hora.strftime('%H:%M')] = 'true'
                 hora += timedelta(minutes=float(self.duracionCitas))
             self.malla[(fecha.strftime('%d/%m/%Y'))] = franjas
             fecha += timedelta(days= 1)

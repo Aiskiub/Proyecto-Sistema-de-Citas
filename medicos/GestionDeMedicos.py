@@ -1,6 +1,7 @@
 from datetime import datetime
 import pandas as pd
 from medicos.medico import Medico
+from medicos.malla import Malla
 
 class GestionDeMedicos:
     def __init__(self):
@@ -26,6 +27,8 @@ class GestionDeMedicos:
             print("Médicos cargados exitosamente desde el archivo Excel.")
         except Exception as e:
             print(f"Error al cargar datos de médicos desde el archivo Excel: {e}")
+        
+        self.generarCitasVacias()
 
     def agregar_medico(self, medico):
         self.medicos.append(medico)
@@ -45,3 +48,7 @@ class GestionDeMedicos:
                 return medico
         return None
 
+    def generarCitasVacias(self):
+        for medico in self.medicos:
+            malla = Malla()
+            medico.citas = malla.generarMalla()
