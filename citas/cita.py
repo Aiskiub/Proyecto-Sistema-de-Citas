@@ -7,7 +7,6 @@ class Cita:
         self.fecha_programacion = fecha_programacion
         self.hora_asignacion = hora_asignacion
         self.consultorio = medico.consultorio
-        self.estado = 'no disponible'
         # Combinar fecha_programacion y hora_asignacion en un objeto datetime
         self.fecha_hora_programacion = datetime(
             fecha_programacion.year,
