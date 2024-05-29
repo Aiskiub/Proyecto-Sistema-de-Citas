@@ -1,10 +1,12 @@
 import pandas as pd
 from medicos.medico import Medico
+from medicos.buscarCitasDisponibles import buscarCitasDisponibles
 from pacientes.paciente import Paciente
 from pacientes.GestionDePacientes import GestionDePacientes
 from pacientes.actualizarPacientes import actualizarDatos
 from pacientes.mostrarPacientes import mostrarPacientes
 from citas.GestionDeCitas import GestionDeCitas
+from citas.cita import Cita
 from datetime import date, datetime, time
 from medicos.GestionDeMedicos import GestionDeMedicos
 import os
@@ -112,25 +114,17 @@ def main():
                             "Ingrese el número de registro médico (RM) del médico: ")
                         medico = gestion_medico.buscar_medico_por_rm(rm_medico)
                         if medico:
+                            fecha = input(
+                                "Ingrese una fecha para agendar su cita (dd/m/Y): ")
+                            buscarCitasDisponibles(medico, fecha)
+                            hora = input(
+                                "Seleccione un horario disponible (HH:MM): ")
+                            gestion_citas.asignar_cita(paciente, medico, fecha, hora)
                             break
+                            
                         else:
                             print(
                                 "No se encontró ningún médico con ese número de registro médico. Intente nuevamente.")
-
-                    # Si se encuentra un médico válido, solicitar la fecha_programacion, hora_asignacion y duracion al usuario
-                    fecha_programacion = input(
-                        "Ingrese la fecha de la cita (YYYY-MM-DD): ")
-                    fecha_programacion = datetime.strptime(
-                        fecha_programacion, "%Y-%m-%d")  # convertir a objeto datetime
-                    hora_asignacion = input(
-                        "Ingrese la hora de la cita (HH:MM): ")
-                    # Convertir la hora de asignación a un objeto time
-                    hora_asignacion = datetime.strptime(
-                        hora_asignacion, "%H:%M").time()
-                    duracion = int(
-                        input("Ingrese la duración de la cita en minutos: "))
-                    gestion_citas.asignar_cita(
-                        paciente, rm_medico, fecha_programacion, hora_asignacion, duracion)
             else:
                 print("No se encontró ningún paciente con ese documento de identidad.")
 
@@ -153,6 +147,7 @@ def main():
             # Salir
             print("Saliendo del programa...")
             break
+    
         else:
             print("Opción no válida. Por favor, ingrese un número válido.")
 

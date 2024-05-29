@@ -1,11 +1,13 @@
-from utils.stack_pacientes import Stack
+from utils.stack import Stack
+from utils.mergesort import mergeSort
+from utils.busquedabinaria import busquedaBinaria
 import pandas as pd
 from pacientes.paciente import Paciente
 from datetime import datetime
 
 class GestionDePacientes:
     def __init__(self):
-        self.pila_pacientes = Stack()  # Cambiamos la lista por una pila
+        self.pila_pacientes = Stack() # Cambiamos la lista por una pila
     
     def cargar_pacientes_desde_excel(self, ruta_excel_pacientes):
         try:
@@ -22,7 +24,8 @@ class GestionDePacientes:
                 
                 # Crear objeto Paciente con los datos obtenidos
                 paciente = Paciente(nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento)
-                self.pila_pacientes.push(paciente)
+                self.agregar_paciente(paciente)
+                
 
             print("Pacientes cargados exitosamente desde el archivo Excel.")
         except Exception as e:
@@ -30,41 +33,35 @@ class GestionDePacientes:
 
     def agregar_paciente(self, paciente):
         self.pila_pacientes.push(paciente)
+        self.ordenarporDocumento()
     
     def leer_pacientes(self):
-        pacientes = []
-        current_node = self.pila_pacientes.top
-        while current_node is not None:
-            paciente = current_node.valor
-            pacientes.append(paciente)
-            current_node = current_node.next
-        
+        pacientes = self.pila_pacientes.items
         if not pacientes:
             print("No hay pacientes en la pila.")
         return pacientes
-
     
     def buscar_paciente(self, documento_identidad):
-        current_node = self.pila_pacientes.top
-        while current_node is not None:
-            if current_node.valor.documento_identidad == documento_identidad:
-                return current_node.valor
-            current_node = current_node.next
-        return None
+        pila = self.pila_pacientes.items
+        paciente = busquedaBinaria(pila, 0, len(pila)-1, int(documento_identidad), 'documento_identidad')
+        return paciente
     
     def borrar_paciente(self, documento_identidad):
-        current_node = self.pila_pacientes.top
-        prev_node = None
-        while current_node is not None:
-            if current_node.valor.documento_identidad == documento_identidad:
-                if prev_node is None:
-                    self.pila_pacientes.pop()  # Eliminar el primer elemento de la pila
-                else:
-                    prev_node.next = current_node.next  # Saltar el nodo actual
-                return True
-            prev_node = current_node
-            current_node = current_node.next
-        return False
-    
+        paciente = self.buscar_paciente(documento_identidad)
+        if paciente:
+            self.pila_pacientes.items.remove(paciente)
+            return True
+        else: 
+            return False
+
     def actualizar_paciente(self, paciente, campo, nuevoValor):
         setattr(paciente, campo, nuevoValor)
+        self.ordenarporDocumento()
+
+    def ordenarporDocumento(self):
+        pila = self.pila_pacientes.items
+        mergeSort(pila, 0, len(pila)-1, lambda pacienteA, pacienteB: \
+                  int(pacienteA.documento_identidad) < int(pacienteB.documento_identidad))
+        self.pila_pacientes.items = pila
+        return
+    
