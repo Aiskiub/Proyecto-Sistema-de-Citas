@@ -1,3 +1,4 @@
+from utils.busquedabinaria import busquedaBinaria
 import pandas as pd
 from datetime import datetime, timedelta
 import os
@@ -25,24 +26,21 @@ class Medico:
         return True
     
     def agregar_cita(self, cita):
-
         # Obtener la fecha y hora de programación de la cita
         fechaCita= cita.fecha_programacion
         horaCita = cita.hora_asignacion
         
         #Modificar disponibilidad en malla a 'false'
         malla = self.citas
-        malla[fechaCita[horaCita]] = 'false'
+        mallaFecha = malla[fechaCita]
+        mallaFecha[horaCita] = 'false'
         
 
     def cancelar_cita(self, cita):
-        # Obtener la fecha de programación de la cita
-        fecha_programacion = cita.fecha_programacion.date()
-        
-        # Verificar si existe una lista de citas para esa fecha
-        if fecha_programacion in self.citas:
-            # Si existe, eliminar la cita de la lista de citas para esa fecha
-            self.citas[fecha_programacion].remove(cita)
+        #Cambia disponibilidad de cita cancelada en la malla del médico
+        fecha = cita.fecha_programacion
+        hora = cita.hora_asignacion
+        mallaFecha = self.citas[fecha[hora]] = 'true'
 
     def __str__(self):
         return f"Dr. {self.nombre} {self.apellido} ({self.especialidad}), RM: {self.numero_rm}"

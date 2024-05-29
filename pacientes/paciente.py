@@ -9,20 +9,20 @@ class Paciente:
         self.tipo_documento = tipo_documento
         self.documento_identidad = documento_identidad
         self.fecha_nacimiento = fecha_nacimiento
-        self.edad = self.calcular_edad(self.fecha_nacimiento)
-        self.clasificacion = self.clasificar(self.edad)
+        self.edad = self.calcular_edad()
+        self.clasificacion = self.clasificar()
         self.cita = None
-        self.tiene_cita = False
 
     # Calculamos la edad de un paciente a partir de su fecha de nacimiento con ayuda de la librería datetime
-    def calcular_edad(fecha_nacimiento):
+    def calcular_edad(self):
         fecha_actual = date.today()
-        resultado = fecha_actual.year - fecha_nacimiento.year
-        resultado -= ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+        resultado = fecha_actual.year - self.fecha_nacimiento.year
+        resultado -= ((fecha_actual.month, fecha_actual.day) < (self.fecha_nacimiento.month, self.fecha_nacimiento.day))
         return resultado
     
     # Clasificamos la edad de un paciente en función de su edad
-    def clasificar(edad):
+    def clasificar(self):
+        edad = self.edad
         if edad is None:
             return "Edad desconocida"
         if edad >= 0 and edad < 1:
