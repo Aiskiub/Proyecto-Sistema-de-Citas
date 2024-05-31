@@ -17,7 +17,7 @@ def main():
     # Ruta absoluta al archivo Excel
     ruta_excel_medicos = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura/Proyecto-Sistema-de-Citas/excel/archivo.xlsx'
     ruta_excel_pacientes = 'C:/Users/ASUS/OneDrive/Documentos/Proyecto Estructura/Proyecto-Sistema-de-Citas/excel/pacientes.xlsx'
-
+    
     # Verificar si los archivos existen
     if not os.path.exists(ruta_excel_medicos):
         print(f"El archivo de médicos no existe: {ruta_excel_medicos}")
