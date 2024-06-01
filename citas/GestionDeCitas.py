@@ -1,30 +1,36 @@
-from datetime import timedelta, datetime, time
+from datetime import datetime
 from citas.cita import Cita
 from medicos.medico import Medico
 from medicos.GestionDeMedicos import GestionDeMedicos
-import pandas as pd
-from queue import Queue
+from utils.RadixSort import radix_sort_citas, counting_sort_citas
 
 class GestionDeCitas:
     def __init__(self, gestion_medicos):
-        self.citas = [] # Lista para almacenar la cola de citas médicas
+        self.citas = []  # Lista para almacenar la cola de citas médicas
         self.gestion_medicos = gestion_medicos  # Guardar la instancia de GestionDeMedicos
 
-    def asignar_cita(self, paciente, medico, fecha, hora):
-       # Crear la cita con la información proporcionada
-       cita = Cita(paciente, medico, fecha, hora)
-       paciente.cita = cita
-       self.citas.append(cita)
-       # Agregar la cita a la malla de citas del médico
-       medico.agregar_cita(cita)
-       print(f"Cita asignada: {cita}")
-       return True
-  
+    def asignar_cita(self, paciente, medico, fecha_str, hora):
+        # Convertir fecha y hora a objeto datetime
+        fecha_programacion = datetime.strptime(fecha_str, "%d/%m/%Y").date()
+        
+        # Verificar disponibilidad antes de asignar la cita
+        if medico.verificar_disponibilidad(fecha_programacion, hora, 30):
+            # Crear la cita con la información proporcionada
+            cita = Cita(paciente, medico, fecha_programacion, hora)
+            paciente.cita = cita
+            self.citas.append(cita)
+            # Agregar la cita a la malla de citas del médico
+            medico.agregar_cita(cita)
+            print(f"Cita asignada: {cita}")
+            return True
+        else:
+            print(f"El horario {hora} el {fecha_str} no está disponible para el Dr. {medico.nombre} {medico.apellido}.")
+            return False
 
     def cancelar_cita(self, paciente):
-        #Elimina la cita de la malla del médico, de la cola de citas y del 
-        #atributo del paciente
-        if paciente.cita:
+        # Elimina la cita de la malla del médico, de la cola de citas y del
+        # atributo del paciente
+        if paciente.cita != -1:
             cita = paciente.cita
             cita.medico.cancelar_cita(cita)
             self.citas.remove(cita)
@@ -33,10 +39,14 @@ class GestionDeCitas:
             return True
         print(f"No hay cita para cancelar para {paciente.nombre} {paciente.apellido}")
 
-
     def mostrar_citas(self):
         if self.citas:
+            self.ordenar_citas_por_fecha()
             for cita in self.citas:
                 print(cita)
         else:
             print("No hay citas programadas aún")
+
+    def ordenar_citas_por_fecha(self):
+        radix_sort_citas(self.citas)
+

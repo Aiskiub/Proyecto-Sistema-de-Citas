@@ -2,7 +2,7 @@ from datetime import datetime
 import pandas as pd
 from medicos.medico import Medico
 from medicos.malla import Malla
-
+from utils.logger import Logger as log
 class GestionDeMedicos:
     def __init__(self):
         self.medicos = []  # Lista de médicos preestablecidos
@@ -10,11 +10,11 @@ class GestionDeMedicos:
     def cargar_medicos_desde_excel(self, ruta_excel_medicos):
         try:
             medicos_df = pd.read_excel(ruta_excel_medicos, sheet_name='medicos')
-            print("Datos de médicos leídos desde el archivo Excel:")
+            log.success("Datos de médicos leídos desde el archivo Excel:")
             #print(medicos_df)  # Imprimir el DataFrame para verificar los datos
             
             for index, row in medicos_df.iterrows():
-                print(f"Fila {index}: {row}")  # Imprimir cada fila para depuración
+                #print(f"Fila {index}: {row}")  # Imprimir cada fila para depuración
                 datos_medico = {
                     'nombre': row['nombre'],
                     'apellido': row['apellido'],
@@ -24,9 +24,9 @@ class GestionDeMedicos:
                 }
                 medico = Medico(datos_medico)
                 self.medicos.append(medico)
-            print("Médicos cargados exitosamente desde el archivo Excel.")
+            log.success("Médicos cargados exitosamente desde el archivo Excel.")
         except Exception as e:
-            print(f"Error al cargar datos de médicos desde el archivo Excel: {e}")
+            log.error(f"Error al cargar datos de médicos desde el archivo Excel: {e}")
         
         self.generarCitasVacias()
 
