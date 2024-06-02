@@ -12,11 +12,12 @@ class GestionDeCitas:
     def asignar_cita(self, paciente, medico, fecha_str, hora):
         # Convertir fecha y hora a objeto datetime
         fecha_programacion = datetime.strptime(fecha_str, "%d/%m/%Y").date()
+        duracion = 30  # Duración de la cita en minutos
         
         # Verificar disponibilidad antes de asignar la cita
-        if medico.verificar_disponibilidad(fecha_programacion, hora, 30):
+        if medico.verificar_disponibilidad(fecha_programacion, hora, duracion):
             # Crear la cita con la información proporcionada
-            cita = Cita(paciente, medico, fecha_programacion, hora)
+            cita = Cita(paciente, medico, fecha_programacion, hora, duracion)
             paciente.cita = cita
             self.citas.append(cita)
             # Agregar la cita a la malla de citas del médico
