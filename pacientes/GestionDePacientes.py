@@ -3,7 +3,7 @@ from utils.mergesort import mergeSort
 from utils.busquedabinaria import busquedaBinaria
 import pandas as pd
 from pacientes.paciente import Paciente
-from datetime import datetime
+from datetime import datetime, date
 from utils.logger import Logger as log
 
 class GestionDePacientes:
@@ -63,9 +63,14 @@ class GestionDePacientes:
         else:
             return False
 
-    def actualizar_paciente(self, paciente, campo, nuevoValor):
-        setattr(paciente, campo, nuevoValor)
-        self.ordenarporDocumento()
+    def actualizar_paciente(self, paciente, atributo, valor):
+        # Convertir fecha_nacimiento a un objeto date si es necesario
+        if atributo == "fecha_nacimiento" and isinstance(valor, str):
+            valor = date.fromisoformat(valor)
+        setattr(paciente, atributo, valor)
+        if atributo == "fecha_nacimiento":
+            paciente.edad = paciente.calcular_edad()
+            paciente.clasificacion = paciente.clasificar()
 
     def ordenarporDocumento(self):
         pila = self.pila_pacientes.items

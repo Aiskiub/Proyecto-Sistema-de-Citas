@@ -1,3 +1,6 @@
+from datetime import datetime, date
+from utils.logger import Logger as log
+
 def actualizarDatos(pila, paciente):
     while True:
         print ("Actualización de datos")
@@ -31,9 +34,14 @@ def actualizarDatos(pila, paciente):
             pila.actualizar_paciente(paciente, "documento_identidad", nuevoDocumento)
 
         elif opcion == "5":
-            #Actualizar fecha de nacimiento
-            nuevaFecha = input("Ingrese la fecha de nacimiento (YYYY-MM-DD): ")
-            pila.actualizar_paciente(paciente, "fecha_nacimiento", nuevaFecha)
+            while True:
+                fecha_nacimiento_str = input("Ingrese la fecha de nacimiento del paciente (YYYY-MM-DD): ")
+                try:
+                    fecha_nacimiento = date.fromisoformat(fecha_nacimiento_str)
+                    break
+                except ValueError:
+                    log.error("Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")
+            pila.actualizar_paciente(paciente, "fecha_nacimiento", fecha_nacimiento)
 
         elif opcion == "6":
             print("Saliendo de Actualización de Datos...")
