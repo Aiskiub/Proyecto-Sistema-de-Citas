@@ -6,7 +6,8 @@ class Stack:
         return self.items == []
         
     def push(self, item): # Metodo para insertar elementos a la pila
-        self.items.insert(0, item)
+        self.items.append(item)
+        
         
     def pop(self): # Metodo para eliminar el ultimo elemento apilado
         return self.items.pop(0)

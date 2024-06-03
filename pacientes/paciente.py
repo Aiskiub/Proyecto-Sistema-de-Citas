@@ -39,4 +39,3 @@ class Paciente:
             return "adulto mayor"
         else:
             return "Edad no clasificada"
-   
