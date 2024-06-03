@@ -1,5 +1,3 @@
-from utils import node
-
 class Stack:
     def __init__(self):
         self.items = []
@@ -9,7 +7,7 @@ class Stack:
         
     def push(self, item): # Metodo para insertar elementos a la pila
         self.items.insert(0, item)
-              
+        
     def pop(self): # Metodo para eliminar el ultimo elemento apilado
         return self.items.pop(0)
         
