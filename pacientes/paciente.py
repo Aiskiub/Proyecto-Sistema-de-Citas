@@ -1,6 +1,6 @@
 from datetime import date
 from utils.stack import Stack
-   
+
 # Definimos la clase Paciente
 class Paciente:
     def __init__(self, nombre, apellido, tipo_documento, documento_identidad, fecha_nacimiento):

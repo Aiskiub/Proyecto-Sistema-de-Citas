@@ -10,6 +10,6 @@ def buscarCitasDisponibles(medico, fecha):
                 print(key + " - Disponible")
                 citas_disponibles = True
         return citas_disponibles
-    except:
-        print("No hay citas en la fecha que indico, ingrese una fecha dentro de 30 dias a partir de hoy")
+    except KeyError:
+        print("No hay citas en la fecha que indicó, ingrese una fecha dentro de 30 días a partir de hoy")
         return False

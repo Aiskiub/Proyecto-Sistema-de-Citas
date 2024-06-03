@@ -22,12 +22,12 @@ class GestionDeCitas:
             self.citas.append(cita)
             # Agregar la cita a la malla de citas del médico
             medico.agregar_cita(cita)
+            medico.eliminar_horario_disponible(fecha_programacion, hora)  # Eliminar horario disponible
             print(f"Cita asignada: {cita}")
             return True
         else:
             print(f"El horario {hora} el {fecha_str} no está disponible para el Dr. {medico.nombre} {medico.apellido}.")
             return False
-
 
     def cancelar_cita(self, paciente):
         # Elimina la cita de la malla del médico, de la cola de citas y del
@@ -36,6 +36,7 @@ class GestionDeCitas:
             cita = paciente.cita
             cita.medico.cancelar_cita(cita)
             self.citas.remove(cita)
+            cita.medico.agregar_horario_disponible(cita.fecha_programacion, cita.hora_asignacion)
             paciente.cita = None
             print(f"Cita cancelada para {paciente.nombre} {paciente.apellido}")
             return True
@@ -51,4 +52,3 @@ class GestionDeCitas:
 
     def ordenar_citas_por_fecha(self):
         radix_sort_citas(self.citas)
-

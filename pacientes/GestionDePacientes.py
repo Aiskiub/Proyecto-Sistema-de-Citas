@@ -58,6 +58,7 @@ class GestionDePacientes:
     def borrar_paciente(self, documento_identidad):
         paciente = self.buscar_paciente(documento_identidad)
         if paciente != -1:
+            print(f"Nombre Paciente : {paciente.nombre}")
             self.pila_pacientes.items.remove(paciente)
             return True
         else:

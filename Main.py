@@ -62,22 +62,30 @@ def main():
             # Agregar paciente
             nombre = input("Ingrese el nombre del paciente: ")
             apellido = input("Ingrese los apellidos del paciente: ")
-            tipo_documento = input(
-                "Ingrese el tipo de documento del paciente (CC/TI/DIG): ")
-            documento_identidad = input(
-                "Ingrese el documento de identidad del paciente: ")
+            tipo_documento = ""
+            while tipo_documento not in ["CC", "TI", "PA", "DIG"]:
+                tipo_documento = input("Ingrese el tipo de documento del paciente (CC/TI/PA/DIG): ")
+                if tipo_documento not in ["CC", "TI", "PA", "DIG"]:
+                    log.error("Tipo de documento incorrecto. Por favor, ingrese uno de los siguientes: CC, TI, PA, DIG.")
+            
+            documento_identidad = ""
+            while not documento_identidad.isdigit():
+                documento_identidad = input("Ingrese el documento de identidad del paciente (solo números): ")
+                if not documento_identidad.isdigit():
+                    log.error("Documento de identidad incorrecto. Por favor, ingrese solo números.")
+            
             while True:
-                fecha_nacimiento_str = input(
-                    "Ingrese la fecha de nacimiento del paciente (YYYY-MM-DD): ")
+                fecha_nacimiento_str = input("Ingrese la fecha de nacimiento del paciente (YYYY-MM-DD): ")
                 try:
                     fecha_nacimiento = date.fromisoformat(fecha_nacimiento_str)
                     break
-                except ValueError: 
-                    log.error(
-                        "Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")
+                except ValueError:
+                    log.error("Formato de fecha incorrecto. Por favor, ingrese la fecha en formato YYYY-MM-DD.")
+            
             paciente = Paciente(nombre=nombre, apellido=apellido, tipo_documento=tipo_documento,
                                 documento_identidad=documento_identidad, fecha_nacimiento=fecha_nacimiento)
             gestion_pacientes.agregar_paciente(paciente)
+
         elif opcion == "3":
             # Actualizar paciente
             documento_identidad = input("Ingrese el documento de identidad del paciente que desea actualizar: ")
@@ -88,15 +96,23 @@ def main():
                 pacienteNotFound()
         elif opcion == "4":
             # Borrar paciente
-            documento_identidad = input(
-                "Ingrese el documento de identidad del paciente que desea borrar: ")
-            if gestion_pacientes.borrar_paciente(documento_identidad):
+            documento_identidad = ""
+            while not documento_identidad.isdigit():
+                documento_identidad = input("Ingrese el documento de identidad del paciente que desea borrar (solo números): ")
+                if not documento_identidad.isdigit():
+                    log.error("Documento de identidad incorrecto. Por favor, ingrese solo números.")
+            
+            if gestion_pacientes.borrar_paciente(int(documento_identidad)):
                 log.success("Paciente borrado correctamente.")
             else:
                 pacienteNotFound()
         elif opcion == "5":
             # Asignar cita
-            documento_identidad = input("Ingrese el documento de identidad del paciente: ")
+            documento_identidad = ""
+            while not documento_identidad.isdigit():
+                documento_identidad = input("Ingrese el documento de identidad del paciente que desea borrar (solo números): ")
+                if not documento_identidad.isdigit():
+                    log.error("Documento de identidad incorrecto. Por favor, ingrese solo números.")
             paciente = gestion_pacientes.buscar_paciente(documento_identidad)
             if paciente != -1: #La vieja confiable
                 if paciente.cita:
