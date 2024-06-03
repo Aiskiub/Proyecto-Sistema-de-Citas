@@ -110,7 +110,7 @@ def main():
             # Asignar cita
             documento_identidad = ""
             while not documento_identidad.isdigit():
-                documento_identidad = input("Ingrese el documento de identidad del paciente que desea borrar (solo números): ")
+                documento_identidad = input("Ingrese el documento de identidad del paciente (solo números): ")
                 if not documento_identidad.isdigit():
                     log.error("Documento de identidad incorrecto. Por favor, ingrese solo números.")
             paciente = gestion_pacientes.buscar_paciente(documento_identidad)
