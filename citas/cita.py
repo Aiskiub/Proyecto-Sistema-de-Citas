@@ -1,23 +1,29 @@
 from datetime import datetime
 
+
 class Cita:
     def __init__(self, paciente, medico, fecha_programacion, hora_asignacion, duracion, consultorio):
         self.paciente = paciente
         self.medico = medico
-        self.fecha_programacion = fecha_programacion
+        self.fecha_solicitud = datetime.strptime(fecha_solicitud, "%Y-%m-%d")
+        self.fecha_programacion = datetime.strptime(
+            fecha_programacion, "%Y-%m-%d")
         self.hora_asignacion = hora_asignacion
         self.duracion = duracion
         self.consultorio = consultorio
         self.estado = 'no disponible'
-        # Combinar fecha_programacion y hora_asignacion en un objeto datetime
-        self.fecha_hora_programacion = datetime(
-            fecha_programacion.year,
-            fecha_programacion.month,
-            fecha_programacion.day,
-            hora_asignacion.hour,
-            hora_asignacion.minute,
-            hora_asignacion.second
-        )
-    
+
+    def asignar_medico(self, medico):
+        self.medico = medico
+
+    def cancelar(self):
+        self.estado = "disponible"
+
     def __str__(self):
-        return f"Cita: {self.paciente.nombre} {self.paciente.apellido} con Dr. {self.medico.nombre} {self.medico.apellido} en consultorio {self.medico.consultorio} el {self.fecha_programacion} a las {self.hora_asignacion}. Estado: {self.estado}"
+        return (f"Cita: {self.paciente.nombres} {self.paciente.apellidos} con Dr. {self.medico.nombre} "
+                f"en consultorio {self.consultorio} el {self.fecha_programacion.strftime('%Y-%m-%d')} "
+                f"a las {self.hora_asignacion}. Estado: {self.estado}")
+
+    def __repr__(self):
+        return (f"Cita({self.fecha_programacion.strftime('%Y-%m-%d')}, {self.hora_asignacion}, "
+                f"{self.consultorio}, {self.medico.nombre}, {self.paciente.nombres}, {self.estado})")
